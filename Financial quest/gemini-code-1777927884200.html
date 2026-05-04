@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rachel Doan | Rutgers Accounting</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --shell: #FFF8F7;
+            --blushing-petal: #FCE4E4;
+            --dusty-rose: #D89B9B;
+            --graphite: #333333;
+            --muted-mauve: #8E7C7C;
+            --white: #ffffff;
+            --sage: #A8B79A;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--shell); color: var(--graphite); font-family: 'Inter', sans-serif; line-height: 1.6; }
+
+        header {
+            padding: 4rem 2rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        .profile-img {
+            width: 150px; height: 150px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            object-fit: cover;
+            border: 4px solid var(--white);
+            box-shadow: 0 10px 25px rgba(216, 155, 155, 0.2);
+        }
+
+        h1 { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .subtitle { font-size: 0.9rem; letter-spacing: 3px; text-transform: uppercase; color: var(--muted-mauve); margin-bottom: 1.5rem; }
+
+        .intro-text {
+            max-width: 600px;
+            text-align: center;
+            margin: 0 auto 3rem;
+            font-size: 1.1rem;
+            color: var(--graphite);
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+        }
+
+        /* The Game App Styling */
+        #game-container {
+            max-width: 600px;
+            margin: 0 auto 4rem;
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(216, 155, 155, 0.15);
+            border: 2px solid var(--blushing-petal);
+        }
+
+        .game-intro { font-size: 1.1rem; font-weight: 600; color: var(--graphite); margin-bottom: 0.5rem; }
+        .game-title { font-family: 'Cormorant Garamond', serif; color: var(--dusty-rose); font-size: 1.8rem; margin-bottom: 1rem; }
+        .balance-display { font-size: 2.5rem; font-weight: bold; color: var(--dusty-rose); margin: 0.5rem 0; }
+        
+        .progress-bar-bg { background: var(--shell); height: 10px; border-radius: 10px; margin: 20px 0; overflow: hidden; }
+        #progress-fill { background: var(--dusty-rose); height: 100%; width: 0%; transition: 0.4s; }
+
+        .scenario-box { min-height: 100px; margin-bottom: 20px; display: flex; flex-direction: column; justify-content: center; }
+        .game-btn {
+            background: var(--shell);
+            border: 1px solid var(--dusty-rose);
+            color: var(--dusty-rose);
+            padding: 12px 20px;
+            margin: 8px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.3s ease;
+        }
+        .game-btn:hover { background: var(--dusty-rose); color: var(--white); transform: scale(1.02); }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto 5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-gap: 25px;
+            padding: 0 2rem;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 24px;
+            border: 1px solid rgba(216, 155, 155, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        .card:hover { transform: translateY(-5px); border-color: var(--dusty-rose); }
+        h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; margin-bottom: 1rem; color: var(--dusty-rose); font-style: italic; }
+        .job-title { font-weight: 600; display: block; }
+        .company { color: var(--muted-mauve); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="assets/picture.jpeg.jpg" alt="Rachel Doan" class="profile-img">
+        <h1>Rachel Doan</h1>
+        <p class="subtitle">Rutgers Business School</p>
+        
+        <p class="intro-text">
+            Aspiring Accountant and current Accounting Clerk at the New Brunswick Parking Authority. 
+            I blend technical precision with a passion for financial literacy and professional growth.
+        </p>
+    </header>
+
+    <div id="game-container">
+        <p class="game-intro">Test your financial literacy! Play this real life simulation</p>
+        <h3 class="game-title">Finance Quest 🌸</h3>
+        
+        <div class="progress-bar-bg"><div id="progress-fill"></div></div>
+        <div class="balance-display" id="balance">$3,500</div>
+        
+        <div class="scenario-box" id="game-body">
+            <p id="scenario-text">Are you ready to manage your monthly budget?</p>
+            <div id="options">
+                <button class="game-btn" onclick="nextQuestion()">Start Simulation</button>
+            </div>
+        </div>
+        
+        <p id="game-msg" style="font-size: 0.85rem; color: var(--muted-mauve);"></p>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2>education</h2>
+            <span class="job-title">Rutgers University</span>
+            <span class="company">B.S. Accounting | Class of 2027</span>
+            <p style="margin-top:10px; font-size:0.85rem;"><strong>Skills:</strong> OSAS Software, Intermediate Excel</p>
+        </div>
+
+        <div class="card">
+            <h2>experience</h2>
+            <span class="job-title">Accounting Clerk</span>
+            <span class="company">NB Parking Authority</span>
+            <p style="margin-top:10px; font-size:0.85rem;">Recording daily transactions and managing AR accounts.</p>
+        </div>
+
+        <div class="card" style="text-align: center;">
+            <h2>connect</h2>
+            <p style="font-size: 0.9rem; margin-bottom: 1rem;">Budd Lake, NJ</p>
+            <a href="mailto:racheld5481@gmail.com" class="game-btn" style="text-decoration: none; display: inline-block;">Email Me</a>
+            <a href="https://www.linkedin.com/in/rachel-doan-a591002b4" class="game-btn" style="text-decoration: none; display: inline-block;" target="_blank">LinkedIn</a>
+        </div>
+    </div>
+
+    <script>
+        let money = 3500;
+        let currentStep = 0;
+
+        const questions = [
+            { q: "Day 1: Rent is due! Do you pay in full or talk to the landlord about a split payment?", options: [ {t: "Pay Full (-$1200)", v: -1200}, {t: "Split Pay (-$600 now)", v: -600} ] },
+            { q: "Day 3: You need groceries for the week. Generic brands or premium organic?", options: [ {t: "Generic (-$80)", v: -80}, {t: "Organic (-$150)", v: -150} ] },
+            { q: "Day 5: A friend invites you to a trendy cafe in New Brunswick. Go or stay in?", options: [ {t: "Go! (-$40)", v: -40}, {t: "Stay in ($0)", v: 0} ] },
+            { q: "Day 7: Subscription renewals! Do you keep all 4 streaming services?", options: [ {t: "Keep All (-$60)", v: -60}, {t: "Cancel 2 (-$20)", v: -20} ] },
+            { q: "Day 10: Car trouble! The 'Check Engine' light is on. Mechanic now or wait?", options: [ {t: "Mechanic (-$300)", v: -300}, {t: "Wait ($0, risky!)", v: 0} ] },
+            { q: "Day 12: You worked overtime! Bonus added to your balance.", options: [ {t: "Claim Bonus (+$200)", v: 200} ] },
+            { q: "Day 14: Mid-month shopping. Buy that cute outfit on sale?", options: [ {t: "Buy It (-$70)", v: -70}, {t: "Skip It ($0)", v: 0} ] },
+            { q: "Day 16: Electricity bill arrived. It's higher than expected due to AC.", options: [ {t: "Pay Bill (-$140)", v: -140} ] },
+            { q: "Day 18: LinkedIn Premium trial ended. Do you pay for the month?", options: [ {t: "Subscribe (-$30)", v: -30}, {t: "Cancel ($0)", v: 0} ] },
+            { q: "Day 20: A family birthday! Buy a gift or make something?", options: [ {t: "Buy Gift (-$50)", v: -50}, {t: "Handmade ($10)", v: -10} ] },
+            { q: "Day 22: You found $20 in an old coat pocket!", options: [ {t: "Lucky Me! (+$20)", v: 20} ] },
+            { q: "Day 24: Internet bill is due.", options: [ {t: "Pay Bill (-$70)", v: -70} ] },
+            { q: "Day 26: Meal prep day. Buy containers and bulk food?", options: [ {t: "Bulk Buy (-$100)", v: -100}, {t: "Daily Takeout (-$250 total)", v: -250} ] },
+            { q: "Day 28: Phone screen cracked! Repair now?", options: [ {t: "Repair (-$120)", v: -120}, {t: "Use cracked ($0)", v: 0} ] },
+            { q: "Day 30: Final day! Save what's left or celebrate the month?", options: [ {t: "Save It ($0)", v: 0}, {t: "Celebrate (-$100)", v: -100} ] }
+        ];
+
+        function nextQuestion() {
+            if (currentStep < questions.length) {
+                const q = questions[currentStep];
+                document.getElementById('scenario-text').innerText = q.q;
+                let btns = "";
+                q.options.forEach(opt => {
+                    btns += `<button class="game-btn" onclick="handleChoice(${opt.v})">${opt.t}</button>`;
+                });
+                document.getElementById('options').innerHTML = btns;
+                updateProgress();
+            } else {
+                finishGame();
+            }
+        }
+
+        function handleChoice(val) {
+            money += val;
+            document.getElementById('balance').innerText = "$" + money.toLocaleString();
+            currentStep++;
+            nextQuestion();
+        }
+
+        function updateProgress() {
+            let percent = (currentStep / questions.length) * 100;
+            document.getElementById('progress-fill').style.width = percent + "%";
+        }
+
+        function finishGame() {
+            let status = money > 1000 ? "Financial Expert! 🥂" : "Budget Survivor! 🌸";
+            document.getElementById('scenario-text').innerHTML = `<h3>Simulation Complete!</h3><p>Remaining Balance: $${money.toLocaleString()}</p><p>${status}</p>`;
+            document.getElementById('options').innerHTML = `<button class="game-btn" onclick="location.reload()">Try Again</button>`;
+            document.getElementById('progress-fill').style.width = "100%";
+        }
+    </script>
+</body>
+</html>
