@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Quest: Monthly Survival</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="app-wrapper">
+        <header id="game-hud">
+            <div class="stat-box">
+                <label>MONTH</label>
+                <div id="month-display">1</div>
+            </div>
+            
+            <div class="stat-box main-balance">
+                <label>ACCOUNT BALANCE</label>
+                <div id="balance-container">
+                    $<span id="balance">3000</span>
+                </div>
+            </div>
+
+            <div class="stat-box">
+                <label>BADGES</label>
+                <div id="badge-bin"></div>
+            </div>
+        </header>
+
+        <div class="progress-track">
+            <div id="month-progress" style="width: 0%;"></div>
+        </div>
+
+        <main id="game-screen">
+            <div id="card-container">
+                <div id="event-card">
+                    <div id="card-icon">🏢</div>
+                    <h2 id="event-title">Welcome to Finance Quest</h2>
+                    <p id="event-description">Your goal is to survive 12 months without going into debt. Your fixed costs (Rent, Utilities, Food) will be deducted at the start of every month.</p>
+                    
+                    <div id="options-area">
+                        <button class="primary-btn" id="start-btn">Start Month 1</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="feedback-note" class="hidden"></div>
+        </main>
+
+        <div id="game-over-screen" class="hidden">
+            <div class="modal-content">
+                <h1 id="result-title">Game Over</h1>
+                <p id="result-message"></p>
+                <div id="final-stats"></div>
+                <button class="primary-btn" onclick="location.reload()">Restart Challenge</button>
+            </div>
+        </div>
+
+        <div id="particle-container"></div>
+    </div>
+
+    <div class="bg-blob"></div>
+    <div class="bg-blob2"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

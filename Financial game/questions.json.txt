@@ -1,0 +1,91 @@
+{
+  "monthly_income": 3000,
+  "fixed_costs": {
+    "rent": 1200,
+    "utilities": 150,
+    "internet": 60,
+    "groceries": 300
+  },
+  "scenarios": [
+    {
+      "id": 1,
+      "description": "Your phone screen cracked! It's hard to read your bank app now. What do you do?",
+      "options": [
+        { "text": "Get the latest Pro model ($1100)", "impact": -1100, "feedback": "Ouch! Your photos look great, but your wallet is crying." },
+        { "text": "Repair the screen ($150)", "impact": -150, "feedback": "Practical move. It looks brand new!" }
+      ]
+    },
+    {
+      "id": 2,
+      "description": "A close friend is having a destination wedding. The flight and hotel are expensive.",
+      "options": [
+        { "text": "Go and celebrate ($800)", "impact": -800, "feedback": "Memories are priceless, but this month will be tight." },
+        { "text": "Send a nice gift and stay home ($100)", "impact": -100, "feedback": "They understood! You saved a fortune on travel." }
+      ]
+    },
+    {
+      "id": 3,
+      "description": "You found a leak under the kitchen sink. Ignoring it could lead to mold.",
+      "options": [
+        { "text": "Call a professional plumber ($250)", "impact": -250, "feedback": "Fixed correctly. Peace of mind restored." },
+        { "text": "Watch a DIY video and fix it ($40)", "impact": -40, "feedback": "It worked! You saved money and learned a skill." }
+      ]
+    },
+    {
+      "id": 4,
+      "description": "Your car's 'Check Engine' light just came on.",
+      "options": [
+        { "text": "Ignore it and hope for the best ($0)", "impact": -500, "feedback": "It broke down a week later. Towing fees plus repairs were brutal." },
+        { "text": "Take it for a diagnostic check ($100)", "impact": -100, "feedback": "It was just a loose gas cap. Good catch!" }
+      ]
+    },
+    {
+      "id": 5,
+      "description": "A new streaming service launched with a show everyone is talking about.",
+      "options": [
+        { "text": "Subscribe for the year ($120)", "impact": -120, "feedback": "Binge-watching starts now!" },
+        { "text": "Wait for a free trial ($0)", "impact": 0, "feedback": "Patience is a virtue (and it's free)." }
+      ]
+    },
+    {
+      "id": 6,
+      "description": "You have the option to invest some of your savings in a low-cost index fund.",
+      "options": [
+        { "text": "Invest $500", "impact": -500, "feedback": "This counts as an expense now, but it's building your future!" },
+        { "text": "Keep it in your checking account ($0)", "impact": 0, "feedback": "Your balance stays high, but inflation is nibbling at it." }
+      ]
+    },
+    {
+      "id": 7,
+      "description": "Work was exhausting. You really don't want to cook tonight.",
+      "options": [
+        { "text": "Order gourmet delivery ($60)", "impact": -60, "feedback": "Delicious, but that's 3 days of groceries gone in 20 minutes." },
+        { "text": "Make a quick pasta dish ($5)", "impact": -5, "feedback": "Simple, filling, and your bank account thanks you." }
+      ]
+    },
+    {
+      "id": 8,
+      "description": "You found a pair of designer shoes on sale for 50% off!",
+      "options": [
+        { "text": "Buy them! ($200)", "impact": -200, "feedback": "You look stylish, but was it an 'emergency'?" },
+        { "text": "Walk away ($0)", "impact": 0, "feedback": "You didn't 'save' $200 by spending $200. Well done." }
+      ]
+    },
+    {
+      "id": 9,
+      "description": "Your annual insurance premium is due.",
+      "options": [
+        { "text": "Pay in full to save 10% ($900)", "impact": -900, "feedback": "Big hit now, but you saved $100 over the long run." },
+        { "text": "Pay monthly ($100)", "impact": -100, "feedback": "Easier on the budget today, but more expensive overall." }
+      ]
+    },
+    {
+      "id": 10,
+      "description": "Health check! Your dentist suggests a specialized cleaning not covered by insurance.",
+      "options": [
+        { "text": "Get the cleaning ($150)", "impact": -150, "feedback": "Health is wealth. Prevention is cheaper than a root canal." },
+        { "text": "Skip it ($0)", "impact": 0, "feedback": "Risky move. Keep those teeth brushed!" }
+      ]
+    }
+  ]
+}

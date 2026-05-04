@@ -1,0 +1,158 @@
+// Game State
+let balance = 0;
+let currentMonth = 1;
+const maxMonths = 12;
+let gameData = null;
+
+// DOM Elements
+const balanceDisplay = document.getElementById('balance');
+const monthDisplay = document.getElementById('month-display');
+const progressDisplay = document.getElementById('month-progress');
+const optionsArea = document.getElementById('options-area');
+const eventTitle = document.getElementById('event-title');
+const eventDescription = document.getElementById('event-description');
+const feedbackNote = document.getElementById('feedback-note');
+const badgeBin = document.getElementById('badge-bin');
+
+// 1. Initialize Game
+async function initGame() {
+    try {
+        const response = await fetch('questions.json');
+        gameData = await response.json();
+        
+        // Set initial balance from income
+        balance = gameData.monthly_income;
+        updateUI();
+        
+        document.getElementById('start-btn').addEventListener('click', startMonth);
+    } catch (error) {
+        console.error("Error loading game data:", error);
+        eventDescription.innerText = "Failed to load game data. Please ensure questions.json is present.";
+    }
+}
+
+// 2. Start a New Month
+function startMonth() {
+    feedbackNote.classList.add('hidden');
+    
+    // Calculate and subtract fixed costs
+    const costs = gameData.fixed_costs;
+    const totalFixed = costs.rent + costs.utilities + costs.internet + costs.groceries;
+    
+    // Visual feedback for the big bill hit
+    createBlast(false); 
+    balance -= totalFixed;
+    
+    eventTitle.innerText = `Month ${currentMonth}: Bills Paid`;
+    eventDescription.innerText = `Rent, Food, and Utilities cost you $${totalFixed} this month. Now, something happened...`;
+    
+    // Show "Next" button to trigger the random event
+    optionsArea.innerHTML = `
+        <button class="primary-btn" onclick="showRandomScenario()">See What Happened</button>
+    `;
+    
+    updateUI();
+}
+
+// 3. Show a Random Event from JSON
+function showRandomScenario() {
+    const scenarios = gameData.scenarios;
+    const randomEvent = scenarios[Math.floor(Math.random() * scenarios.length)];
+    
+    eventTitle.innerText = "Life Happens";
+    eventDescription.innerText = randomEvent.description;
+    optionsArea.innerHTML = '';
+
+    randomEvent.options.forEach(option => {
+        const btn = document.createElement('button');
+        btn.className = 'primary-btn option-btn';
+        btn.innerText = option.text;
+        btn.onclick = () => handleChoice(option);
+        optionsArea.appendChild(btn);
+    });
+}
+
+// 4. Handle Player Choice
+function handleChoice(option) {
+    balance += option.impact;
+    
+    // Trigger animations
+    if (option.impact < 0) {
+        document.getElementById('balance-container').classList.add('shake');
+        createBlast(false);
+        setTimeout(() => document.getElementById('balance-container').classList.remove('shake'), 400);
+    } else if (option.impact > 0) {
+        createBlast(true);
+    }
+
+    // Show feedback
+    feedbackNote.innerText = option.feedback;
+    feedbackNote.classList.remove('hidden');
+
+    // Check if game over or next month
+    if (balance <= 0) {
+        showGameOver(false);
+    } else if (currentMonth >= maxMonths) {
+        showGameOver(true);
+    } else {
+        currentMonth++;
+        optionsArea.innerHTML = `<button class="primary-btn" onclick="startMonth()">Start Month ${currentMonth}</button>`;
+        updateUI();
+    }
+}
+
+// 5. Visual Juice: Money Blast
+function createBlast(isGain) {
+    const container = document.getElementById('particle-container');
+    const emojis = isGain ? ['💵', '💰', '✨'] : ['💸', '📉', '❌'];
+    
+    for (let i = 0; i < 8; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        
+        const x = (Math.random() - 0.5) * 300;
+        const y = (Math.random() - 0.5) * 300;
+        p.style.setProperty('--x', `${x}px`);
+        p.style.setProperty('--y', `${y}px`);
+        
+        p.style.left = '50%';
+        p.style.top = '20%';
+        
+        container.appendChild(p);
+        setTimeout(() => p.remove(), 1000);
+    }
+}
+
+// 6. Update UI Elements
+function updateUI() {
+    balanceDisplay.innerText = balance;
+    monthDisplay.innerText = currentMonth;
+    
+    // Update Progress Bar
+    const progressPercent = ((currentMonth - 1) / maxMonths) * 100;
+    progressDisplay.style.width = `${progressPercent}%`;
+
+    // Color balance red if low
+    balanceDisplay.style.color = balance < 500 ? 'var(--danger)' : 'var(--primary)';
+}
+
+// 7. End Game
+function showGameOver(isWin) {
+    const screen = document.getElementById('game-over-screen');
+    const title = document.getElementById('result-title');
+    const msg = document.getElementById('result-message');
+    
+    screen.classList.remove('hidden');
+    
+    if (isWin) {
+        title.innerText = "Survivor! 🏆";
+        msg.innerText = `Incredible! You survived a full year. Your final savings: $${balance}. You're ready for the real world!`;
+    } else {
+        title.innerText = "Broke, but Wiser 💡";
+        msg.innerText = `You ran out of money in Month ${currentMonth}. Don't worry, every mistake is a lesson. Want to try a different strategy?`;
+    }
+}
+
+// Start the game on load
+initGame();
